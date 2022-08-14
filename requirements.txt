@@ -1,0 +1,8 @@
+bcrypt
+cryptography
+fastapi
+passlib
+pyodbc
+python-jose
+python-multipart
+uvicorn
