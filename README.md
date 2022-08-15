@@ -9,4 +9,6 @@ Using MSSQL as Database
   Table: User(id, username, password)
          Note(id, title, content)
 
+Some connection string in .env
+
 First. You need to register an account and login with JWT. Link: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt
