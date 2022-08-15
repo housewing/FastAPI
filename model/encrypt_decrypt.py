@@ -31,14 +31,22 @@ class EncryptDecrypt:
             yield unciphered_text.decode('utf-8')
 
 if __name__ == '__main__':
-    from config.secret_key import symmetric_key
-    from config.connect_string import connect_list
+    from dotenv import load_dotenv
+    import sys
+    import os
 
-    ed = EncryptDecrypt(symmetric_key)
+    load_dotenv()
+
+    ed = EncryptDecrypt(os.getenv('SYMMETRIC'))
     # connect_info = ed.encrypt_info()
     # print(connect_info)
 
-    connect_info = ed.decrypt_info(connect_list.get('518'))
+    encrypt_driver = os.getenv('WIN_DRIVER') if sys.platform != 'linux' else os.getenv('LINUX_DRIVER')
+    encrypt_server = os.getenv('DB_SERVER')
+    encrypt_username = os.getenv('DB_USERNAME')
+    encrypt_password = os.getenv('DB_PASSWORD')
+
+    connect_info = ed.decrypt_info([encrypt_driver, encrypt_server, encrypt_username, encrypt_password])
     [driver, server, username, password] = list(connect_info)
     print(driver, server, username, password)
 

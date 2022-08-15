@@ -1,6 +1,7 @@
-from config.secret_key import symmetric_key
 from model.encrypt_decrypt import EncryptDecrypt
+from dotenv import load_dotenv
 import pyodbc
+import os
 
 connect_type = {
     'SQL server': 'DRIVER={0}; SERVER={1}; DATABASE={2}; UID={3}; PWD={4}',
@@ -8,9 +9,15 @@ connect_type = {
 }
 
 class DBconnect:
-    def __init__(self, info, db):
-        ed = EncryptDecrypt(symmetric_key)
-        connect_info = ed.decrypt_info(info)
+    def __init__(self, platform, db):
+        load_dotenv()
+        encrypt_driver = os.getenv('WIN_DRIVER') if platform != 'linux' else os.getenv('LINUX_DRIVER')
+        encrypt_server = os.getenv('DB_SERVER')
+        encrypt_username = os.getenv('DB_USERNAME')
+        encrypt_password = os.getenv('DB_PASSWORD')
+
+        ed = EncryptDecrypt(os.getenv('SYMMETRIC'))
+        connect_info = ed.decrypt_info([encrypt_driver, encrypt_server, encrypt_username, encrypt_password])
         [self.driver, self.server, self.username, self.password] = list(connect_info)
         self.db = db
 
@@ -38,8 +45,8 @@ class DBconnect:
         crsr.commit()
 
 if __name__ == '__main__':
-    from config.connect_string import connect_list
-    db_connect = DBconnect(connect_list.get('518'), 'WLS')
+    import sys
+    db_connect = DBconnect(sys.platform, 'WLS')
 
     sql = 'SELECT * FROM [User]'
     desc, data = db_connect.query(sql)

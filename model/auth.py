@@ -1,10 +1,10 @@
-from config.connect_string import connect_list
 from config.sql import user_sql
 from model.database import DBconnect
 from passlib.context import CryptContext
 from pydantic import BaseModel
 from typing import Union
 import time
+import sys
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 current_milli_time = lambda: int(round(time.time() * 1000))
@@ -21,7 +21,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 def get_user(username: str)->User:
-    db_connect = DBconnect(connect_list.get('518'), 'WLS')
+    db_connect = DBconnect(sys.platform, 'WLS')
     desc, data = db_connect.query(user_sql.get('get_user').format(username))
     for row in data:
         return User(
@@ -33,7 +33,7 @@ def get_user(username: str)->User:
 
 def create_user(form_data):
     data = [[current_milli_time(), form_data.username, get_password_hash(form_data.password)]]
-    db_connect = DBconnect(connect_list.get('518'), 'WLS')
+    db_connect = DBconnect(sys.platform, 'WLS')
     db_connect.insert(user_sql.get('create_user'), data)
 
 def validate_user(form_data):

@@ -6,3 +6,4 @@ pyodbc
 python-jose
 python-multipart
 uvicorn
+python-dotenv
