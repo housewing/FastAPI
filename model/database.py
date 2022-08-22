@@ -5,6 +5,7 @@ import os
 
 connect_type = {
     'SQL server': 'DRIVER={0}; SERVER={1}; DATABASE={2}; UID={3}; PWD={4}',
+    'ODBC Driver 18 for SQL Server': 'DRIVER={0}; SERVER={1}; DATABASE={2}; UID={3}; PWD={4}; TrustServerCertificate=yes;',
     'Teradata': 'DRIVER={0};DBCNAME={1};UID={3};PWD={4};QUIETMODE=YES; ANSI=str(True), autocommit=str(True)'
 }
 

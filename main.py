@@ -18,9 +18,10 @@ app.add_middleware(
 if __name__ == '__main__':
     from dotenv import load_dotenv
     import uvicorn
+    import sys
     import os
 
-    load_dotenv()
-
-    uvicorn.run(app='main:app', host=os.getenv('HOST'), port=int(os.getenv('PORT')), reload=True, debug=True)
+    if sys.platform != 'linux':
+        load_dotenv()
+        uvicorn.run(app='main:app', host=os.getenv('HOST'), port=int(os.getenv('PORT')), reload=True, debug=True)
     # uvicorn main:app --host=127.0.0.1 --port=8000 --reload

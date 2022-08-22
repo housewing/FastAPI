@@ -42,6 +42,7 @@ if __name__ == '__main__':
     # print(connect_info)
 
     encrypt_driver = os.getenv('WIN_DRIVER') if sys.platform != 'linux' else os.getenv('LINUX_DRIVER')
+    encrypt_driver = os.getenv('LINUX_DRIVER')
     encrypt_server = os.getenv('DB_SERVER')
     encrypt_username = os.getenv('DB_USERNAME')
     encrypt_password = os.getenv('DB_PASSWORD')

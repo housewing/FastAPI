@@ -1,6 +1,7 @@
 bcrypt
 cryptography
 fastapi
+pydantic
 passlib
 pyodbc
 python-jose
